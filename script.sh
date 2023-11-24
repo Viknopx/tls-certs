@@ -1,14 +1,14 @@
 #!/bin/bash
 
+GITHUB_REF_NAME=$*
 
-DOMAINS=$*
-PROVIDER=cf
+PROVIDER=$(echo $GITHUB_REF_NAME | awk -F '/' '{print$1}')
+DOMAINS=$(echo $GITHUB_REF_NAME | awk -F '/' '{print$2}')
 
-#envsubst </root/.mc/mc.config.tmpl > /root/.mc/config.json
-#envsubst </root/.config/rclone/rclone.conf.tmpl > /root/.config/rclone/rclone.conf
+envsubst </root/.mc/mc.config.tmpl >/root/.mc/config.json
+envsubst </root/.config/rclone/rclone.conf.tmpl >/root/.config/rclone/rclone.conf
 
 EMAIL=${EMAIL:-"sys-ops@test.com"}
-
 
 for domain in $(echo $DOMAINS | sed 's/,/ /g'); do
     {
@@ -32,7 +32,6 @@ function cfdns() {
     lego --email="${EMAIL}" ${PARAMS} --path=$(pwd) --dns cloudflare run
 }
 
-
 function archive() {
     ls certificates/*
     tar zcf ${DOMAINS}.tgz certificates && mc cp ${DOMAINS}.tgz cos/ops-software/nginx-certs/ && {
@@ -42,7 +41,7 @@ function archive() {
         echo ""
         echo $TGZ
         echo "wget -c $TGZ"
-        
+
     }
 
 }
@@ -60,7 +59,9 @@ qcloud)
     ;;
 esac
 
-#archive
+archive
 
-echo $PARAMS
-env
+
+
+cat /root/.mc/config.json
+cat /root/.config/rclone/rclone.conf

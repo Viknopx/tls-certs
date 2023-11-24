@@ -1,8 +1,12 @@
 name: docker script
-
+#https://docs.github.com/zh/actions/using-workflows/events-that-trigger-workflows
 on:
-  push: # push 到主分支自动 发布
-    branches: ["main"]
+  push: 
+    branches:
+        - 'test'
+        - 'cf/**'
+        - 'aliyun/**'
+        - 'qcloud/**'
     paths-ignore: # 忽略一些不必要的文件
       - ".gitignore"
       - "README.md"
@@ -29,7 +33,6 @@ jobs:
       - name: docker build
         run: |
           docker build . --file Dockerfile --tag ci-image:latest
-          env
       - name: run docker script
         run: |
           docker run --rm -i \
@@ -40,4 +43,4 @@ jobs:
           -e ALICLOUD_SECRET_KEY=$ALICLOUD_SECRET_KEY \
           -e CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN \
           -e DNSPOD_API_KEY=$DNSPOD_API_KEY \
-          ci-image:latest ppp.ssl.lyhepj.cn,ttt.ssl.lyhepj.cn
+          ci-image:latest $GITHUB_REF_NAME
