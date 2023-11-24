@@ -63,3 +63,4 @@ esac
 #archive
 
 echo $PARAMS
+env

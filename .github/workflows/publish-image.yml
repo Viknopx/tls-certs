@@ -13,6 +13,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+        #使用默认环境
+    environment: default
+    env:
+        S3_AK: ${{ vars.S3_AK }}
+        S3_EP: ${{ vars.S3_EP }}
+        S3_SK: ${{ vars.S3_SK }}
+        ALICLOUD_ACCESS_KEY: ${{ vars.ALICLOUD_ACCESS_KEY }}
+        ALICLOUD_SECRET_KEY: ${{ vars.ALICLOUD_SECRET_KEY }}
+        CLOUDFLARE_DNS_API_TOKEN: ${{ vars.CLOUDFLARE_DNS_API_TOKEN }}
+        DNSPOD_API_KEY: ${{ vars.DNSPOD_API_KEY }}
+
     steps:
       - uses: actions/checkout@v3
       - name: docker build
