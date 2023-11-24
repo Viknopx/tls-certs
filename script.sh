@@ -34,9 +34,9 @@ function cfdns() {
 
 function archive() {
     ls certificates/*
-    tar zcf ${DOMAINS}.tgz certificates && mc cp ${DOMAINS}.tgz cos/ops-software/nginx-certs/ && {
+    tar zcf ssl.tgz certificates && mc cp ssl.tgz cos/ops-software/nginx-certs/ && {
 
-        TGZ=https://$S3_EP/nginx-certs/${DOMAINS}.tgz
+        TGZ=$S3_EP/nginx-certs/${DOMAINS}.tgz
 
         echo ""
         echo $TGZ
