@@ -27,8 +27,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: docker build
-        run:
+        run: |
           docker build . --file Dockerfile --tag ci-image:latest
+          env
       - name: run docker script
-        run:
-          docker run --rm -i ci-image:latest ppp.ssl.lyhepj.cn,ttt.ssl.lyhepj.cn
+        run: |
+          docker run --rm -i \
+          -e S3_AK=$S3_AK \
+          -e S3_EP=$S3_EP \
+          -e S3_SK=$S3_SK \
+          -e ALICLOUD_ACCESS_KEY=$ALICLOUD_ACCESS_KEY \
+          -e ALICLOUD_SECRET_KEY=$ALICLOUD_SECRET_KEY \
+          -e CLOUDFLARE_DNS_API_TOKEN=$CLOUDFLARE_DNS_API_TOKEN \
+          -e DNSPOD_API_KEY=$DNSPOD_API_KEY \
+          ci-image:latest ppp.ssl.lyhepj.cn,ttt.ssl.lyhepj.cn
