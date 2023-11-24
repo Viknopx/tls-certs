@@ -11,7 +11,7 @@ COPY --from=mc /usr/bin/mc /usr/bin/mc
 ADD ./configs/mc.config /root/.mc/mc.config.tmpl
 ADD ./configs/rclone.conf /root/.config/rclone/rclone.conf.tmpl
 
-COPY --from=lego /usr/bin/lego /usr/bin/lego
+COPY --from=lego /usr/local/bin/lego /usr/bin/lego
 
 ADD ./script.sh /usr/bin/lego.sh
 RUN chmod +x /usr/bin/lego.sh
