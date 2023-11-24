@@ -15,8 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: run docker script
+      - name: docker build
         run:
           docker build . --file Dockerfile --tag ci-image:latest
+      - name: run docker script
+        run:
           docker run --rm -it ci-image:latest 
-
