@@ -20,4 +20,4 @@ jobs:
           docker build . --file Dockerfile --tag ci-image:latest
       - name: run docker script
         run:
-          docker run --rm -it ci-image:latest 
+          docker run --rm -i ci-image:latest 
